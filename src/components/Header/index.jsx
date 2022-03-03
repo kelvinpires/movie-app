@@ -22,28 +22,28 @@ export const Header = ({ setSearch, search }) => {
           <h1 className="logo-title">What is that movie</h1>
         </div>
       </Link>
-      <a
+      <Link
         style={{
           color: "white",
           fontSize: "1.8rem",
           textDecoration: "none",
           fontFamily: "Inter",
         }}
-        href="/movies"
+        to="/movies"
       >
         Filmes
-      </a>
-      <a
+      </Link>
+      <Link
         style={{
           color: "white",
           fontSize: "1.8rem",
           textDecoration: "none",
           fontFamily: "Inter",
         }}
-        href="/series"
+        to="/series"
       >
         Séries
-      </a>
+      </Link>
       <Link
         style={{
           color: "white",

@@ -21,7 +21,7 @@ export const AllMoviesPage = ({ type }) => {
     api
       .get(`genre/${type}/list?api_key=${API_KEY}&language=pt-BR`)
       .then(({ data }) => setGenres(data.genres));
-  }, []);
+  }, [type]);
 
   useEffect(() => {
     api
@@ -55,7 +55,7 @@ export const AllMoviesPage = ({ type }) => {
 
         setMovies(data.results);
       });
-  }, [genreActiveBtn]);
+  }, [genreActiveBtn || type]);
 
   const handleLoad = () => {
     setPage(page + 1);

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import {
   SlideButton,
   SlideCarousel,
@@ -13,10 +13,16 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Link } from "react-router-dom";
 
 export function SlideSimilar({ type, recommendationsContent }) {
+  let scrollFinal = 0;
+
+  useEffect(() => {
+    scrollFinal = 0;
+    carousel.current.scrollLeft = 0;
+  }, [recommendationsContent]);
+
   const carousel = useRef();
 
   const contentType = type == "movie" ? "Filmes" : "Séries";
-  let scrollFinal = 0;
 
   const handleScrollLeft = () => {
     carousel.current.scrollLeft -= carousel.current.offsetWidth;
@@ -51,14 +57,14 @@ export function SlideSimilar({ type, recommendationsContent }) {
         </SlideButton>
         {recommendationsContent.map((movie) => {
           return (
-            <a href={`/${type}/${movie.id}`} key={movie.id}>
+            <Link to={`/${type}/${movie.id}`} key={movie.id}>
               <SlideItem className="slide-item">
                 <SlideImg
                   className="slide-img"
                   src={getImage(movie.poster_path)}
                 />
               </SlideItem>
-            </a>
+            </Link>
           );
         })}
         <SlideButton
