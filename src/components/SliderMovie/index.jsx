@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Loading } from "../Loading";
 
-import { API_KEY, getImage, getMovies } from "../../api";
+import { API_KEY, getImage } from "../../api";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Link } from "react-router-dom";
@@ -9,6 +10,7 @@ import "./styles.css";
 
 function SliderMovie({ Type, Genre, GenreName }) {
   const [genreMovies, setGenreMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const userLanguage = navigator.language;
 
@@ -21,7 +23,8 @@ function SliderMovie({ Type, Genre, GenreName }) {
       .get(
         `${Type}/${Genre}?api_key=${API_KEY}&language=${userLanguage}&page=1`
       )
-      .then(({ data }) => setGenreMovies(data.results));
+      .then(({ data }) => setGenreMovies(data.results))
+      .finally(() => setLoading(false));
   };
 
   const carousel = useRef();
@@ -49,38 +52,48 @@ function SliderMovie({ Type, Genre, GenreName }) {
   };
 
   return (
-    <div className="slide-container">
-      <h2 className="slider-genre-name" children={GenreName} />
-      <ul className="slide-carousel" ref={carousel}>
-        <button
-          className="slide-button"
-          style={{ left: 0 }}
-          onClick={handleScrollLeft}
-        >
-          <ArrowBackIosNewIcon style={{ color: "#FFF", fontSize: "4rem" }} />
-        </button>
-        {genreMovies.map((movie) => {
-          return (
-            <li key={movie.id} className="slide-item">
-              <Link to={`/${Type}/${movie.id}`}>
-                <img
-                  className="slide-img"
-                  src={getImage(movie.poster_path)}
-                  alt={movie.title || movie.name}
-                />
-              </Link>
-            </li>
-          );
-        })}
-        <button
-          className="slide-button"
-          style={{ right: 0 }}
-          onClick={handleScrollRight}
-        >
-          <ArrowForwardIosIcon style={{ color: "#FFF", fontSize: "4rem" }} />
-        </button>
-      </ul>
-    </div>
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="slide-container">
+          <h2 className="slider-genre-name" children={GenreName} />
+          <ul className="slide-carousel" ref={carousel}>
+            <button
+              className="slide-button"
+              style={{ left: 0 }}
+              onClick={handleScrollLeft}
+            >
+              <ArrowBackIosNewIcon
+                style={{ color: "#FFF", fontSize: "4rem" }}
+              />
+            </button>
+            {genreMovies.map((movie) => {
+              return (
+                <li key={movie.id} className="slide-item">
+                  <Link to={`/${Type}/${movie.id}`}>
+                    <img
+                      className="slide-img"
+                      src={getImage(movie.poster_path)}
+                      alt={movie.title || movie.name}
+                    />
+                  </Link>
+                </li>
+              );
+            })}
+            <button
+              className="slide-button"
+              style={{ right: 0 }}
+              onClick={handleScrollRight}
+            >
+              <ArrowForwardIosIcon
+                style={{ color: "#FFF", fontSize: "4rem" }}
+              />
+            </button>
+          </ul>
+        </div>
+      )}
+    </>
   );
 }
 
