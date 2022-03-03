@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { Loading } from "../Loading";
 
 import { API_KEY, getImage } from "../../api";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Link } from "react-router-dom";
 import { api } from "../../services/api";
 import "./styles.css";
+
+import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
 
 function SliderMovie({ Type, Genre, GenreName }) {
   const [genreMovies, setGenreMovies] = useState([]);
@@ -24,7 +24,11 @@ function SliderMovie({ Type, Genre, GenreName }) {
         `${Type}/${Genre}?api_key=${API_KEY}&language=${userLanguage}&page=1`
       )
       .then(({ data }) => setGenreMovies(data.results))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      });
   };
 
   const carousel = useRef();
@@ -64,9 +68,7 @@ function SliderMovie({ Type, Genre, GenreName }) {
               style={{ left: 0 }}
               onClick={handleScrollLeft}
             >
-              <ArrowBackIosNewIcon
-                style={{ color: "#FFF", fontSize: "4rem" }}
-              />
+              <MdOutlineNavigateBefore size="5rem" color="white" />
             </button>
             {genreMovies.map((movie) => {
               return (
@@ -86,9 +88,7 @@ function SliderMovie({ Type, Genre, GenreName }) {
               style={{ right: 0 }}
               onClick={handleScrollRight}
             >
-              <ArrowForwardIosIcon
-                style={{ color: "#FFF", fontSize: "4rem" }}
-              />
+              <MdOutlineNavigateNext size="5rem" color="white" />
             </button>
           </ul>
         </div>

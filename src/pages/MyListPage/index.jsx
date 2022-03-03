@@ -1,22 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { GlobalContext } from "../../context/GlobalState";
 import { getImage } from "../../api";
-import {
-  Container,
-  ItemContainer,
-  ItemDate,
-  ItemImg,
-  ItemList,
-  ItemTitle,
-  ItemInfo,
-  DeleteBtn,
-} from "./styles";
+
 import { Link } from "react-router-dom";
+import "./styles.css";
 
 export const MyListPage = () => {
   const { watchlist } = useContext(GlobalContext);
-
-  console.log(watchlist);
+  const userLang = navigator.language;
 
   const handleRemoveItem = (movie) => {
     let itemsList = watchlist;
@@ -28,23 +19,38 @@ export const MyListPage = () => {
     location.reload();
   };
 
+  const streams = watchlist.map(
+    (movie) => movie["watch/providers"]?.results[userLang.slice(3)]?.flatrate
+  );
+  const platforms = streams.map((item) => item);
+
   return (
-    <Container>
-      <ItemTitle style={{ fontSize: "3rem" }} as="h2" children="Minha Lista" />
-      <ItemContainer>
-        {watchlist.map((movie) => (
-          <ItemList key={movie.id}>
+    <div className="container">
+      <h3
+        className="item-title"
+        style={{ fontSize: "3rem" }}
+        as="h2"
+        children="Minha Lista"
+      />
+      <ul className="item-container">
+        {watchlist.map((movie, index) => (
+          <li className="item-list" key={movie.id}>
             <Link to={`/${movie.type}/${movie.id}`} key={movie.id}>
-              <ItemImg
+              <img
+                className="item-img"
                 src={getImage(movie.poster_path)}
                 alt={movie.title || movie.name}
               />
             </Link>
 
-            <ItemInfo>
+            <div className="item-info">
               <div>
-                <ItemTitle children={movie.title || movie.name} />
-                <ItemDate
+                <h3
+                  className="item-title"
+                  children={movie.title || movie.name}
+                />
+                <p
+                  className="item-date"
                   children={
                     movie.release_date
                       ? new Date(movie.release_date).getFullYear()
@@ -52,17 +58,32 @@ export const MyListPage = () => {
                   }
                 />
               </div>
+              <div>
+                <h3 className="platforms-availables">
+                  Plataformas disponíveis:
+                </h3>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+                  {platforms[index]?.map((platform) => (
+                    <div key={Math.random() * 100}>
+                      <img
+                        src={`https://image.tmdb.org/t/p/w45${platform.logo_path}`}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-              <DeleteBtn
+              <button
+                className="delete-btn"
                 style={{ height: "4rem", width: "max-content" }}
                 onClick={() => handleRemoveItem(movie)}
               >
-                Remover filme
-              </DeleteBtn>
-            </ItemInfo>
-          </ItemList>
+                Remover
+              </button>
+            </div>
+          </li>
         ))}
-      </ItemContainer>
-    </Container>
+      </ul>
+    </div>
   );
 };

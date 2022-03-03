@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { getImage, API_KEY } from "../../api";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
+
 import { Link } from "react-router-dom";
 import { api } from "../../services/api";
 import "./styles.css";
@@ -10,12 +10,13 @@ import "./styles.css";
 function HeaderBanner() {
   const [moviesTrendings, setMoviesTrendings] = useState([]);
   const userLang = navigator.language;
+  let scrollFinal = 0;
 
   const getMoviesTrendings = () => {
     api
       .get(`trending/all/day?api_key=${API_KEY}&language=${userLang}`)
       .then(({ data }) => {
-        setMoviesTrendings(data.results.slice(0, 6));
+        setMoviesTrendings(data.results.slice(0, 4));
       })
       .catch((err) => {
         console.warn(err);
@@ -27,8 +28,6 @@ function HeaderBanner() {
   }, []);
 
   const carousel = useRef();
-
-  let scrollFinal = 0;
 
   const handleScrollLeft = () => {
     carousel.current.scrollLeft -= carousel.current.offsetWidth;
@@ -57,12 +56,7 @@ function HeaderBanner() {
         style={{ left: ".1rem" }}
         onClick={handleScrollLeft}
       >
-        <ArrowBackIosNewIcon
-          style={{
-            fontSize: "3rem",
-          }}
-          color="primary"
-        />
+        <MdOutlineNavigateBefore size="5rem" color="#f03a47" />
       </div>
       <div className="banner-container" ref={carousel}>
         <ul className="banner-carousel">
@@ -104,7 +98,7 @@ function HeaderBanner() {
         style={{ right: ".1rem" }}
         onClick={handleScrollRight}
       >
-        <ArrowForwardIosIcon style={{ fontSize: "3rem" }} color="primary" />
+        <MdOutlineNavigateNext size="5rem" color="#f03a47" />
       </div>
     </>
   );

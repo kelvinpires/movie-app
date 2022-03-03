@@ -1,4 +1,4 @@
-import LiveTvIcon from "@mui/icons-material/LiveTv";
+import { FaDev } from "react-icons/fa";
 import { CircularProgress } from "@mui/material";
 import React from "react";
 
@@ -20,7 +20,19 @@ export function Loading() {
         right: 0,
       }}
     >
-      <LiveTvIcon style={{ fontSize: "8rem", color: "#fff" }} />
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h1
+          style={{
+            fontSize: "4rem",
+            fontFamily: "Roboto",
+            color: "white",
+            fontWeight: "600",
+          }}
+        >
+          Movie.
+        </h1>
+        <FaDev size="6rem" color="#fff" />
+      </div>
       <CircularProgress style={{ color: "#fff" }} />
     </div>
   );

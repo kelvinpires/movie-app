@@ -1,22 +1,15 @@
 import React, { useRef, useEffect } from "react";
-import {
-  SlideButton,
-  SlideCarousel,
-  SlideContainer,
-  SlideImg,
-  SlideItem,
-  SliderGenreName,
-} from "./styles";
+
 import { getImage } from "../../../api";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
+
 import { Link } from "react-router-dom";
 
 export function SlideSimilar({ type, recommendationsContent }) {
   let scrollFinal = 0;
 
   useEffect(() => {
-    scrollFinal = 0;
+    scrollFinal = 4;
     carousel.current.scrollLeft = 0;
   }, [recommendationsContent]);
 
@@ -45,36 +38,36 @@ export function SlideSimilar({ type, recommendationsContent }) {
   };
 
   return (
-    <SlideContainer>
-      <SliderGenreName children={`${contentType} semelhantes`} />
-      <SlideCarousel className="carousel" ref={carousel}>
-        <SlideButton
-          className="slide-btn"
+    <div className="slide-container">
+      <h2
+        className="slider-genre-name"
+        children={`${contentType} semelhantes`}
+      />
+      <div className="slide-carousel" ref={carousel}>
+        <button
+          className="slide-button"
           style={{ left: 0 }}
           onClick={handleScrollLeft}
         >
-          <ArrowBackIosNewIcon style={{ color: "#FFF", fontSize: "4rem" }} />
-        </SlideButton>
+          <MdOutlineNavigateBefore size="4rem" color="white" />
+        </button>
         {recommendationsContent.map((movie) => {
           return (
             <Link to={`/${type}/${movie.id}`} key={movie.id}>
-              <SlideItem className="slide-item">
-                <SlideImg
-                  className="slide-img"
-                  src={getImage(movie.poster_path)}
-                />
-              </SlideItem>
+              <div className="slide-item">
+                <img className="slide-img" src={getImage(movie.poster_path)} />
+              </div>
             </Link>
           );
         })}
-        <SlideButton
-          className="slide-btn"
+        <button
+          className="slide-button"
           style={{ right: 0 }}
           onClick={handleScrollRight}
         >
-          <ArrowForwardIosIcon style={{ color: "#FFF", fontSize: "4rem" }} />
-        </SlideButton>
-      </SlideCarousel>
-    </SlideContainer>
+          <MdOutlineNavigateNext size="4rem" color="white" />
+        </button>
+      </div>
+    </div>
   );
 }

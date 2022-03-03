@@ -1,13 +1,6 @@
 import React from "react";
-import {
-  MovieTrailerContainer,
-  MovieTrailerContent,
-  MovieContentAction,
-  MovieTrailerIframe,
-  MovieTrailerTag,
-  MovieContentExit,
-} from "./styles";
-import CloseIcon from "@mui/icons-material/Close";
+import { MdClose } from "react-icons/md";
+import "./styles.css";
 
 export function MovieTrailer({
   displayTrailer,
@@ -18,20 +11,25 @@ export function MovieTrailer({
   const displayFlex = displayTrailer == "flex";
 
   return (
-    <MovieTrailerContainer style={{ display: displayTrailer }}>
-      <MovieTrailerContent>
-        <MovieContentAction>
-          <MovieTrailerTag children={movieTitle} />
-          <MovieContentExit>
-            <CloseIcon
+    <div
+      className="movie-trailer-container"
+      style={{ display: displayTrailer }}
+    >
+      <div className="movie-trailer-content">
+        <div className="movie-content-action">
+          <h2 className="movie-trailer-tag" children={movieTitle} />
+          <div className="movie-content-exit">
+            <MdClose
               onClick={displayHandler}
-              style={{ cursor: "pointer", fontSize: "3rem", color: "#fff" }}
+              size="3rem"
+              color="white"
+              style={{ cursor: "pointer" }}
             />
-          </MovieContentExit>
-        </MovieContentAction>
+          </div>
+        </div>
         {haveTrailer && displayFlex ? (
           <>
-            <MovieTrailerIframe
+            <iframe
               width="100%"
               height="100%"
               src={`https://www.youtube.com/embed/${
@@ -42,12 +40,12 @@ export function MovieTrailer({
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
               style={{ border: "none" }}
-            ></MovieTrailerIframe>
+            ></iframe>
           </>
         ) : (
           ""
         )}
-      </MovieTrailerContent>
-    </MovieTrailerContainer>
+      </div>
+    </div>
   );
 }

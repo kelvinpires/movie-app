@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import LiveTvIcon from "@mui/icons-material/LiveTv";
-import SearchIcon from "@mui/icons-material/Search";
+import { FiSearch } from "react-icons/fi";
+import { FaDev } from "react-icons/fa";
 
 import "./styles.css";
 
@@ -15,49 +14,22 @@ export const Header = ({ setSearch, search }) => {
         style={{ textDecoration: "none" }}
       >
         <div className="logo-content">
-          <LiveTvIcon
-            className="logo"
-            style={{ fontSize: "40px", color: "#FFF" }}
-          />
-          <h1 className="logo-title">What is that movie</h1>
+          <h1 className="logo-title">Movies.</h1>
+          <FaDev className="logo" size="4.5rem" color="white" />
         </div>
       </Link>
-      <Link
-        style={{
-          color: "white",
-          fontSize: "1.8rem",
-          textDecoration: "none",
-          fontFamily: "Inter",
-        }}
-        to="/movies"
-      >
+      <Link className="page" to="/movies">
         Filmes
       </Link>
-      <Link
-        style={{
-          color: "white",
-          fontSize: "1.8rem",
-          textDecoration: "none",
-          fontFamily: "Inter",
-        }}
-        to="/series"
-      >
+      <Link className="page" to="/series">
         Séries
       </Link>
-      <Link
-        style={{
-          color: "white",
-          fontSize: "1.8rem",
-          textDecoration: "none",
-          fontFamily: "Inter",
-        }}
-        to="/my-list"
-      >
+      <Link className="page" to="/my-list">
         Minha lista
       </Link>
 
       <div className="input-search-content">
-        <SearchIcon style={{ fontSize: "2.4rem", color: "white" }} />
+        <FiSearch size="2rem" color="white" />
         <input
           className="input-search"
           value={search}

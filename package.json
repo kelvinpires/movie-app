@@ -1,18 +1,12 @@
 {
   "name": "movie-app",
   "version": "0.0.0",
-  "homepage": "https://kelvinpires.github.io/movie-app",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
-    "@mui/icons-material": "^5.3.1",
     "@mui/material": "^5.4.0",
     "axios": "^0.26.0",
     "react": "^17.0.2",
@@ -23,7 +17,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.7",
-    "gh-pages": "^3.2.3",
     "vite": "^2.7.2"
   }
 }

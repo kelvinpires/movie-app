@@ -1,39 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  SlideButton,
-  SlideCarousel,
-  SlideContainer,
-  SlideImg,
-  SlideItem,
-  SliderGenreName,
-} from "./styles";
-import { API_KEY, getImage } from "../../../api";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
+
+import { getImage } from "../../../api";
 
 function SlideCast({ cast }) {
-  // const [cast, setCast] = useState([]);
-
-  const userLanguage = navigator.language;
-  const { type, id } = useParams();
-
-  // useEffect(() => {
-  //   getGenreMovies();
-  // }, []);
-
-  // const getGenreMovies = async () => {
-  //   const res = await fetch(
-  //     `https://api.themoviedb.org/3/${type}/${id}/credits?api_key=${API_KEY}&language=${userLanguage}`
-  //   );
-  //   const data = await res.json();
-
-  //   setCast(data.cast);
-  // };
-
+  let scrollFinal = 0;
   const carousel = useRef();
 
-  let scrollFinal = 0;
+  useEffect(() => {
+    carousel.current.scrollLeft = 0;
+    scrollFinal = 0;
+  }, [cast]);
 
   const handleScrollLeft = () => {
     carousel.current.scrollLeft -= carousel.current.offsetWidth;
@@ -55,20 +32,24 @@ function SlideCast({ cast }) {
   };
 
   return (
-    <SlideContainer>
-      <SliderGenreName children="Elenco principal" />
-      <SlideCarousel className="carousel" ref={carousel}>
-        <SlideButton style={{ left: 0 }} onClick={handleScrollLeft}>
-          <ArrowBackIosNewIcon style={{ color: "#FFF", fontSize: "4rem" }} />
-        </SlideButton>
+    <div className="slide-container">
+      <h2 className="slider-genre-name" children="Elenco principal" />
+      <div className="slide-carousel" ref={carousel}>
+        <button
+          className="slide-button"
+          style={{ left: 0 }}
+          onClick={handleScrollLeft}
+        >
+          <MdOutlineNavigateBefore size="4rem" color="white" />
+        </button>
         {cast?.map((act) => {
           const actImg =
             act.profile_path !== null
               ? getImage(act.profile_path)
               : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXT05fi8hhDM3K386lZ1X5ohWlolSJV71FgMPySBO4XC9dcm5jD2AVAdd8gtRbgOQ-FdM&usqp=CAU";
           return (
-            <SlideItem key={act.name}>
-              <SlideImg src={actImg} />
+            <div className="slide-item" key={act.name}>
+              <img className="slide-img" src={actImg} alt={act.name} />
               <div
                 style={{
                   width: "100%",
@@ -102,14 +83,18 @@ function SlideCast({ cast }) {
                   {act.character}
                 </p>
               </div>
-            </SlideItem>
+            </div>
           );
         })}
-        <SlideButton style={{ right: 0 }} onClick={handleScrollRight}>
-          <ArrowForwardIosIcon style={{ color: "#FFF", fontSize: "4rem" }} />
-        </SlideButton>
-      </SlideCarousel>
-    </SlideContainer>
+        <button
+          className="slide-button"
+          style={{ right: 0 }}
+          onClick={handleScrollRight}
+        >
+          <MdOutlineNavigateNext size="4rem" color="white" />
+        </button>
+      </div>
+    </div>
   );
 }
 

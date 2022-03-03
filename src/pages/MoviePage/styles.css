@@ -1,0 +1,201 @@
+@media screen and (min-width: 700px) {
+  .movie-page-container {
+    max-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .movie-page-details {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    padding: 2rem 4rem;
+  }
+
+  .movie-img-container {
+    height: 55rem;
+    width: 45%;
+    border-radius: 0.5rem;
+    z-index: 2;
+  }
+  .movie-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+  .movie-description {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    margin: auto 6rem;
+    margin-right: 1rem;
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .movie-title {
+    font-size: 4rem;
+    color: white;
+    font-weight: 700;
+    font-family: "Roboto", sans-serif;
+    text-shadow: 0.2rem 0.1rem 0.3rem #1a1a1a;
+  }
+  .movie-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    align-items: center;
+  }
+  .movie-certification {
+    min-width: 3rem;
+    height: 3rem;
+    max-width: max-content;
+    padding: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    border-radius: 0.3rem;
+  }
+  .movie-runtime-container {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .movie-runtime-span,
+  .movie-release-date {
+    font-size: 2rem;
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+    opacity: 0.8;
+    word-spacing: -0.2rem;
+  }
+  .movie-rate-container {
+    display: flex;
+    align-items: center;
+  }
+  .movie-rate-p {
+    font-size: 2.4rem;
+    font-family: "Roboto", sans-serif;
+    color: white;
+  }
+  .movie-release-genre {
+    display: flex;
+    max-width: 100%;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .movie-genres-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-left: 4rem;
+  }
+
+  .movie-genre {
+    border-radius: 0.5rem;
+    background: #09203f;
+    color: #f5f5f5;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .movie-genre:hover {
+    filter: brightness(1.2);
+  }
+  .movie-tagline {
+    opacity: 0.8;
+    font-size: 1.8rem;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    text-shadow: 0.1rem 0.1rem 0.3rem #1a1a1a;
+  }
+  .sinopse-sbt {
+    font-size: 2.6rem;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    color: white;
+  }
+  .sinopse-content {
+    font-size: 1.6rem;
+    font-family: "Open Sans", sans-serif;
+
+    color: white;
+    opacity: 0.9;
+    line-height: 1.5;
+    text-shadow: 0.1rem 0.1rem 0.3rem #1a1a1a;
+  }
+
+  /* trailer */
+  .see-trailer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+  .see-trailer:hover {
+    opacity: 0.8;
+  }
+  .play-trailer {
+    font-size: 2rem;
+    color: #f5f5f5;
+    font-family: "Inter", sans-serif;
+  }
+  .vote-container {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    padding: 0.5rem;
+  }
+  .vote-done {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-family: "Roboto", sans-serif;
+    font-size: 2.6rem;
+    font-weight: 600;
+    padding: 0.4rem;
+    border-radius: 50%;
+    background: #15202b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* add list btn */
+  .add-list-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1.6rem;
+    font-family: "Roboto", sans-serif;
+    width: max-content;
+    padding: 0.8rem 1rem 0.8rem 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #f03a47;
+    box-shadow: 0 0.1rem 0.3rem #1a1a1a;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  .add-list-btn:hover {
+    filter: brightness(1.1);
+  }
+
+  .add-list-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

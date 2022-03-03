@@ -1,7 +1,6 @@
 import React from "react";
 import { HeaderBanner } from "../../components/HeaderBanner";
 import { SliderMovie } from "../../components/SliderMovie";
-// import { SearchSection } from "../../components/SearchSection";
 
 function HomePage() {
   return (

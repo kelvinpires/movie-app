@@ -1,42 +1,20 @@
 import React, { useEffect, useState, useContext } from "react";
 import { API_KEY, getImage } from "../../api";
-import { useParams } from "react-router-dom";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import AddIcon from "@mui/icons-material/Add";
+import { Link, useParams } from "react-router-dom";
+import { MdWatchLater } from "react-icons/md";
+import { MdAdd } from "react-icons/md";
 import { GlobalContext } from "../../context/GlobalState";
 
 import { Loading } from "../../components/Loading";
 
-import {
-  MoviePageContainer,
-  MovieImg,
-  MovieDescription,
-  MovieImgDiv,
-  MovieTitle,
-  MoviePageDetails,
-  MoviePageBg,
-  MovieTagLine,
-  MovieInfo,
-  MovieRuntimeDiv,
-  MovieRuntimeSpan,
-  MovieReleaseDate,
-  MovieReleaseGenre,
-  MovieGenresDiv,
-  MovieGenre,
-  SinopseSbt,
-  SinopseContent,
-  VoteDiv,
-  VoteDone,
-  SeeTrailer,
-  PlayTrailer,
-  MovieCertification,
-  AddListBtn,
-} from "./styles";
 import { SlideCast } from "./SlideCast";
-import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
+import { FaPlay } from "react-icons/fa";
 import { MovieTrailer } from "./MovieTrailer";
 import axios from "axios";
 import { SlideSimilar } from "./SlideSimilar";
+
+import { MoviePageBg } from "./styles";
+import "./styles.css";
 
 function MoviePage() {
   const [movieDetails, setMovieDetails] = useState([]);
@@ -56,27 +34,28 @@ function MoviePage() {
   let tvShowCertification;
   let UStvShowCertification;
 
-  let voteColor;
+  let voteColorBg;
+  let voteColorBgImg;
 
   const { type, id } = useParams();
 
   const getMovieDetails = () => {
     axios
       .get(
-        `https://api.themoviedb.org/3/${type}/${id}?api_key=${API_KEY}&append_to_response=videos,images,release_dates,content_ratings,recommendations,credits&include_image_language=${userLang},null&include_video_language=${userLang},en&language=${userLang}`
+        `https://api.themoviedb.org/3/${type}/${id}?api_key=${API_KEY}&append_to_response=videos,images,release_dates,content_ratings,recommendations,credits,watch/providers&include_image_language=${userLang},null&include_video_language=${userLang},en&language=${userLang}`
       )
       .then(({ data }) => {
         setMovieDetails(data);
         setMovieTrailers(data.videos.results);
-        data.release_dates
-          ? setMovieCertification(data.release_dates.results)
-          : "";
+        data.release_dates && setMovieCertification(data.release_dates.results);
       })
       .catch((err) => {
         console.warn(err);
       })
       .finally(() => {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
       });
   };
 
@@ -140,17 +119,15 @@ function MoviePage() {
       break;
   }
 
-  voteColor =
-    movieDetails.vote_average >= 5
-      ? `background-color: #7ee8fa;
-  background-image: linear-gradient(315deg, #7ee8fa 0%, #80ff72 74%);`
-      : `background-color: #feae96;
-background-image: linear-gradient(315deg, #feae96 0%, #fe0944 74%);;
-`;
-
-  if (movieDetails.vote_average == 0) {
-    voteColor = `background-color: #b8c6db;
-background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);`;
+  if (movieDetails.vote_average >= 5) {
+    voteColorBg = "#7ee8fa";
+    voteColorBgImg = "linear-gradient(315deg, #7ee8fa 0%, #80ff72 74%)";
+  } else if (movieDetails.vote_average == 0) {
+    voteColorBg = "#b8c6db";
+    voteColorBgImg = "linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%)";
+  } else {
+    voteColorBg = "#feae96";
+    voteColorBgImg = "linear-gradient(315deg, #feae96 0%, #fe0944 74%)";
   }
 
   const getRuntime = (runtimeMin) => {
@@ -235,27 +212,34 @@ background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);`;
       {loading ? (
         <Loading />
       ) : (
-        <MoviePageContainer>
-          <MoviePageDetails className="moviepage-details">
+        <div className="movie-page-container">
+          <div className="movie-page-details">
             <MoviePageBg
               bg={getImage(movieDetails.backdrop_path)}
             ></MoviePageBg>
-            <MovieImgDiv className="movie-imgdiv">
-              <MovieImg src={getImage(movieDetails.poster_path)} />
-            </MovieImgDiv>
-            <MovieDescription>
-              <MovieTitle className="movie-title">
+            <div className="movie-img-container">
+              <img
+                className="movie-img"
+                src={getImage(movieDetails.poster_path)}
+              />
+            </div>
+            <div className="movie-description">
+              <h1 className="movie-title">
                 {movieDetails.title || movieDetails.name}
-              </MovieTitle>
-              <MovieInfo>
-                <MovieRuntimeDiv>
+              </h1>
+              <div className="movie-info">
+                <div className="movie-runtime-container">
                   {certification && (
-                    <MovieCertification
-                      certificationColor={releaseDatesColor}
+                    <div
+                      className="movie-certification"
+                      style={{
+                        border: `0.2rem solid ${releaseDatesColor}`,
+                        backgroundColor: `${releaseDatesColor}80`,
+                      }}
                       children={certification}
                     />
                   )}
-                  <AccessTimeIcon
+                  <MdWatchLater
                     style={{
                       color: "#fff",
                       opacity: 0.8,
@@ -264,60 +248,73 @@ background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);`;
                     }}
                   />
 
-                  <MovieRuntimeSpan children={getRuntime(filmTime)} />
-                </MovieRuntimeDiv>
-                <MovieReleaseDate children={releaseDate} />
+                  <span
+                    className="movie-runtime-span"
+                    children={getRuntime(filmTime)}
+                  />
+                </div>
+                <span className="movie-release-date" children={releaseDate} />
 
                 {/* trailer div */}
 
                 {haveTrailer != false && (
-                  <SeeTrailer onClick={handleDisplayTrailer}>
-                    <PlayArrowRoundedIcon
-                      style={{ color: "#fff", fontSize: "3rem" }}
+                  <div className="see-trailer" onClick={handleDisplayTrailer}>
+                    <FaPlay color="#fff" size="2rem" />
+                    <h3
+                      className="play-trailer"
+                      children="Reproduzir Trailer"
                     />
-                    <PlayTrailer children="Reproduzir Trailer" />
-                  </SeeTrailer>
+                  </div>
                 )}
-              </MovieInfo>
-              <MovieReleaseGenre>
+              </div>
+              <div className="movie-release-genre">
                 {/* votaçao */}
-                <VoteDiv bgColor={voteColor}>
-                  <VoteDone
+                <div
+                  className="vote-container"
+                  style={{
+                    backgroundColor: `${voteColorBg}`,
+                    backgroundImage: `${voteColorBgImg}`,
+                  }}
+                >
+                  <div
+                    className="vote-done"
                     children={
                       movieDetails.vote_average !== 0
                         ? movieDetails.vote_average
                         : "SN"
                     }
                   />
-                </VoteDiv>
+                </div>
                 {/* votaçao */}
-                <MovieGenresDiv>
+                <div className="movie-genres-container">
                   {movieDetails.genres.map((genre) => (
-                    <MovieGenre
+                    <Link
+                      className="movie-genre"
                       to={`/movies/?gen=${genre.id}`}
                       key={genre.id}
                       children={genre.name}
                     />
                   ))}
-                </MovieGenresDiv>
-              </MovieReleaseGenre>
+                </div>
+              </div>
 
               {/* add to list */}
 
-              <AddListBtn
+              <button
+                className="add-list-btn"
                 disabled={watchlistDisabled}
                 onClick={() => addMovieToWatchList({ ...movieDetails, type })}
               >
-                <AddIcon style={{ fontSize: "2.5rem" }} />
+                <MdAdd size="2.5rem" />
                 Adicionar à lista
-              </AddListBtn>
+              </button>
               {/* add to list */}
 
-              <MovieTagLine children={movieDetails.tagline} />
-              <SinopseSbt children="Sinopse" />
-              <SinopseContent children={movieDetails.overview} />
-            </MovieDescription>
-          </MoviePageDetails>
+              <h3 className="movie-tagline" children={movieDetails.tagline} />
+              <h2 className="sinopse-sbt" children="Sinopse" />
+              <p className="sinopse-content" children={movieDetails.overview} />
+            </div>
+          </div>
           <div
             style={{
               backgroundColor: "#030b17",
@@ -339,7 +336,7 @@ background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);`;
             movieTitle={movieDetails.title || movieDetails.name}
             haveTrailer={haveTrailer}
           />
-        </MoviePageContainer>
+        </div>
       )}
     </>
   );
