@@ -1,0 +1,20 @@
+@media screen and (max-width: 700px) {
+  /* header */
+  .header-menu .logo {
+    font-size: 1.6rem !important;
+  }
+
+  /* carousel */
+
+  .carousel .slide-item {
+    min-width: 15rem;
+  }
+  .slide-item .slide-img {
+    height: 25rem;
+    object-fit: cover;
+  }
+
+  .carousel .slide-btn {
+    display: none;
+  }
+}
