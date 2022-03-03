@@ -15,7 +15,7 @@ function App() {
   const [search, setSearch] = useState("");
 
   return (
-    <Router basename="/movie-app">
+    <Router>
       <Header setSearch={setSearch} search={search} />
       {search.length > 1 ? (
         <SearchSection search={search} setSearch={setSearch} />
