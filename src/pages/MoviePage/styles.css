@@ -8,14 +8,14 @@
   }
   .movie-page-details {
     width: 100%;
-    height: 60%;
+    height: 100vh;
     display: flex;
     padding: 2rem 4rem;
   }
 
   .movie-img-container {
     height: 55rem;
-    width: 45%;
+    width: 57rem;
     border-radius: 0.5rem;
     z-index: 2;
   }
