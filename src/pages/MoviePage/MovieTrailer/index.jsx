@@ -38,7 +38,7 @@ export function MovieTrailer({
               title={haveTrailer.name}
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              allowFullScreen
               style={{ border: "none" }}
             ></iframe>
           </>
