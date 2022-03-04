@@ -16,7 +16,7 @@ function HeaderBanner() {
     api
       .get(`trending/all/day?api_key=${API_KEY}&language=${userLang}`)
       .then(({ data }) => {
-        setMoviesTrendings(data.results.slice(0, 4));
+        setMoviesTrendings(data.results.slice(0, 7));
       })
       .catch((err) => {
         console.warn(err);
@@ -84,7 +84,7 @@ function HeaderBanner() {
                 <Link to={`/${movie.media_type}/${movie.id}`}>
                   <img
                     className="slider-img"
-                    src={getImage(movie.backdrop_path)}
+                    src={`https://www.themoviedb.org/t/p/w780${movie.backdrop_path}`}
                     alt={movie.title || movie.name}
                   />
                 </Link>

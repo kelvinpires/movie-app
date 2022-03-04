@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { API_KEY, getImage } from "../../api";
+import { API_KEY } from "../../api";
 import { api } from "../../services/api";
 
 import "./styles.css";
@@ -12,9 +12,7 @@ function SearchSection({ search, setSearch }) {
   const userLanguage = navigator.language;
 
   useEffect(() => {
-    setTimeout(() => {
-      getSearch();
-    }, 1000);
+    getSearch();
   }, [search]);
 
   const getSearch = () => {
@@ -28,31 +26,30 @@ function SearchSection({ search, setSearch }) {
   return (
     <section className="search-container">
       <h1 className="search-title">Resultados da busca: "{search}"</h1>
-      <div className="movies-group">
+      <ul className="movies-group">
         {moviesSearch.map((movie) => {
           return (
             <>
               {movie.poster_path ? (
-                <div className="item">
+                <li className="item" key={movie.id}>
                   <Link
                     onClick={() => setSearch("")}
                     to={`/${movie.media_type}/${movie.id}`}
-                    key={movie.id}
                   >
                     <img
                       className="item-img"
-                      src={getImage(movie.poster_path)}
+                      src={`https://www.themoviedb.org/t/p/w342${movie.poster_path}`}
                       alt={movie.title || movie.name}
                     />
                   </Link>
-                </div>
+                </li>
               ) : (
                 ""
               )}
             </>
           );
         })}
-      </div>
+      </ul>
     </section>
   );
 }

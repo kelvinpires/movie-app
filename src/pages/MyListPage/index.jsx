@@ -38,7 +38,7 @@ export const MyListPage = () => {
             <Link to={`/${movie.type}/${movie.id}`} key={movie.id}>
               <img
                 className="item-img"
-                src={getImage(movie.poster_path)}
+                src={`https://www.themoviedb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title || movie.name}
               />
             </Link>

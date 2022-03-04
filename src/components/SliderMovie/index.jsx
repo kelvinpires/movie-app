@@ -76,7 +76,7 @@ function SliderMovie({ Type, Genre, GenreName }) {
                   <Link to={`/${Type}/${movie.id}`}>
                     <img
                       className="slide-img"
-                      src={getImage(movie.poster_path)}
+                      src={`https://www.themoviedb.org/t/p/w342${movie.poster_path}`}
                       alt={movie.title || movie.name}
                     />
                   </Link>

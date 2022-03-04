@@ -80,7 +80,6 @@ export const AllMoviesPage = ({ type }) => {
         <section
           className="search-container"
           style={{
-            padding: "2rem 0",
             backgroundColor: "#030b17",
           }}
         >
@@ -118,36 +117,27 @@ export const AllMoviesPage = ({ type }) => {
             />
           </div>
 
-          <div
-            className="movies-group"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              margin: 0,
-            }}
-          >
+          <ul className="movies-group">
             {movies.map((movie) => (
-              <div
-                className="item"
-                style={{ width: "18rem", height: "28rem" }}
-                key={movie.id}
-              >
-                <Link to={`/${type}/${movie.id}`}>
-                  <img
-                    className="item-img"
-                    src={getImage(movie.poster_path)}
-                    alt={movie.title || movie.name}
-                  />
-                </Link>
-              </div>
+              <li className="item" key={movie.id}>
+                {movie.poster_path && (
+                  <Link to={`/${type}/${movie.id}`}>
+                    <img
+                      className="item-img"
+                      src={`https://www.themoviedb.org/t/p/w342${movie.poster_path}`}
+                      alt={movie.title || movie.name}
+                    />
+                  </Link>
+                )}
+              </li>
             ))}
-            <div className="button-container">
-              <button
-                className="load-button"
-                onClick={handleLoad}
-                children="Carregar mais"
-              />
-            </div>
+          </ul>
+          <div className="button-container">
+            <button
+              className="load-button"
+              onClick={handleLoad}
+              children="Carregar mais"
+            />
           </div>
         </section>
       )}

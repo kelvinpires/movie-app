@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { API_KEY, getImage } from "../../api";
+import { API_KEY } from "../../api";
 import { Link, useParams } from "react-router-dom";
 import { MdWatchLater } from "react-icons/md";
 import { MdAdd } from "react-icons/md";
@@ -215,12 +215,12 @@ function MoviePage() {
         <div className="movie-page-container">
           <div className="movie-page-details">
             <MoviePageBg
-              bg={getImage(movieDetails.backdrop_path)}
+              bg={`https://www.themoviedb.org/t/p/w1280${movieDetails.backdrop_path}`}
             ></MoviePageBg>
             <div className="movie-img-container">
               <img
                 className="movie-img"
-                src={getImage(movieDetails.poster_path)}
+                src={`https://www.themoviedb.org/t/p/w780${movieDetails.poster_path}`}
               />
             </div>
             <div className="movie-description">

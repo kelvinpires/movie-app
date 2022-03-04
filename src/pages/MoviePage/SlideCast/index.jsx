@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
 
-import { getImage } from "../../../api";
-
 function SlideCast({ cast }) {
   let scrollFinal = 0;
   const carousel = useRef();
@@ -45,7 +43,7 @@ function SlideCast({ cast }) {
         {cast?.map((act) => {
           const actImg =
             act.profile_path !== null
-              ? getImage(act.profile_path)
+              ? `https://www.themoviedb.org/t/p/w342/${act.profile_path}`
               : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXT05fi8hhDM3K386lZ1X5ohWlolSJV71FgMPySBO4XC9dcm5jD2AVAdd8gtRbgOQ-FdM&usqp=CAU";
           return (
             <div className="slide-item" key={act.name}>
@@ -53,13 +51,12 @@ function SlideCast({ cast }) {
               <div
                 style={{
                   width: "100%",
-                  height: "100%",
+                  height: "max-content",
                   textAlign: "center",
                   background: "#f4f4f4",
                   display: "flex",
                   alignItems: "center",
                   flexDirection: "column",
-                  justifyContent: "center",
                   padding: ".5rem 0",
                 }}
               >
@@ -68,7 +65,6 @@ function SlideCast({ cast }) {
                     fontSize: "1.4rem",
                     fontWeight: "700",
                     fontFamily: "Inter",
-                    flex: 1,
                     lineHeight: 2,
                   }}
                 >
@@ -78,6 +74,7 @@ function SlideCast({ cast }) {
                   style={{
                     fontSize: "1.4rem",
                     fontFamily: "Roboto",
+                    marginTop: "1rem",
                   }}
                 >
                   {act.character}

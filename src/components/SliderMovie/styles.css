@@ -35,6 +35,7 @@
   }
   .slide-item {
     min-width: 20rem;
+    min-height: 30rem;
     list-style: none;
   }
   .slide-item:hover {

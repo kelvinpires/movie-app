@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from "react";
 
-import { getImage } from "../../../api";
 import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
 
 import { Link } from "react-router-dom";
@@ -55,7 +54,10 @@ export function SlideSimilar({ type, recommendationsContent }) {
           return (
             <Link to={`/${type}/${movie.id}`} key={movie.id}>
               <div className="slide-item">
-                <img className="slide-img" src={getImage(movie.poster_path)} />
+                <img
+                  className="slide-img"
+                  src={`https://www.themoviedb.org/t/p/w342${movie.poster_path}`}
+                />
               </div>
             </Link>
           );
