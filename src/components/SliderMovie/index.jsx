@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Loading } from "../Loading";
 
-import { API_KEY, getImage } from "../../api";
+import { API_KEY } from "../../api";
 import { Link } from "react-router-dom";
 import { api } from "../../services/api";
 import "./styles.css";

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { getImage, API_KEY } from "../../api";
+import { API_KEY } from "../../api";
 import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
 
 import { Link } from "react-router-dom";
@@ -84,7 +84,7 @@ function HeaderBanner() {
                 <Link to={`/${movie.media_type}/${movie.id}`}>
                   <img
                     className="slider-img"
-                    src={`https://www.themoviedb.org/t/p/w780${movie.backdrop_path}`}
+                    src={`https://www.themoviedb.org/t/p/w1280${movie.backdrop_path}`}
                     alt={movie.title || movie.name}
                   />
                 </Link>
