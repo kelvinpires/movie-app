@@ -320,6 +320,7 @@ function MoviePage() {
               backgroundColor: "#030b17",
               width: "100%",
               height: "100%",
+              zIndex: 4,
             }}
           >
             <SlideCast cast={movieDetails.credits.cast} />

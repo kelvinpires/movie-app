@@ -50,7 +50,7 @@ function HeaderBanner() {
   };
 
   return (
-    <>
+    <div style={{ position: "relative" }}>
       <div
         className="handle-slide"
         style={{ left: ".1rem" }}
@@ -100,7 +100,7 @@ function HeaderBanner() {
       >
         <MdOutlineNavigateNext size="5rem" color="#f03a47" />
       </div>
-    </>
+    </div>
   );
 }
 
