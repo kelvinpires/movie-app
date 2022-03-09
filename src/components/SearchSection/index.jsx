@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { API_KEY } from "../../api";
+import { GlobalContext } from "../../context/GlobalState";
 import { api } from "../../services/api";
 
 import "./styles.css";
 
-function SearchSection({ search, setSearch }) {
+function SearchSection() {
+  const { search, setSearch } = useContext(GlobalContext);
   const [moviesSearch, setMoviesSearch] = useState([]);
 
   const userLanguage = navigator.language;

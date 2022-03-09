@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer, useEffect, useState } from "react";
 import AppReducer from "./AppReducer";
 
 const initialState = {
@@ -8,6 +8,7 @@ const initialState = {
 export const GlobalContext = createContext(initialState);
 
 export const GlobalProvider = (props) => {
+  const [search, setSearch] = useState("");
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   useEffect(() => {
@@ -20,7 +21,12 @@ export const GlobalProvider = (props) => {
 
   return (
     <GlobalContext.Provider
-      value={{ watchlist: state.watchlist, addMovieToWatchList }}
+      value={{
+        watchlist: state.watchlist,
+        addMovieToWatchList,
+        search,
+        setSearch,
+      }}
     >
       {props.children}
     </GlobalContext.Provider>

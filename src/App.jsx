@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header";
 import { HomePage } from "./pages/HomePage";
@@ -7,18 +6,17 @@ import { SearchSection } from "./components/SearchSection";
 
 import { MyListPage } from "./pages/MyListPage";
 import { AllMoviesPage } from "./pages/AllMoviesPage";
-// import "./mediacss/home.css";
-
-// import { Footer } from "./components/Footer";
+import { useContext } from "react";
+import { GlobalContext } from "./context/GlobalState";
 
 function App() {
-  const [search, setSearch] = useState("");
+  const { search } = useContext(GlobalContext);
 
   return (
     <Router>
-      <Header setSearch={setSearch} search={search} />
+      <Header />
       {search.length > 1 ? (
-        <SearchSection search={search} setSearch={setSearch} />
+        <SearchSection />
       ) : (
         <>
           <Routes>
@@ -28,7 +26,6 @@ function App() {
             <Route path="/movies" element={<AllMoviesPage type="movie" />} />
             <Route path="/series" element={<AllMoviesPage type="tv" />} />
           </Routes>
-          {/* <Footer /> */}
         </>
       )}
     </Router>

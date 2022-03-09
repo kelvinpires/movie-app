@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalContext } from "../../context/GlobalState";
 import { Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import { FaDev } from "react-icons/fa";
 
 import "./styles.css";
 
-export const Header = ({ setSearch, search }) => {
+export const Header = () => {
+  const { search, setSearch } = useContext(GlobalContext);
+
   return (
     <header className="header-menu">
       <Link
