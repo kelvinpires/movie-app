@@ -36,7 +36,7 @@ export function MovieTrailer({
                 haveTrailer.key || haveTrailer[0].key
               }`}
               title={haveTrailer.name}
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               style={{ border: "none" }}

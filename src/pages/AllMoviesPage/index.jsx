@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { API_KEY, getImage } from "../../api";
-import { api } from "../../services/api";
+import { API_KEY, api } from "../../services/api";
 import { Loading } from "../../components/Loading";
 
 import { Link } from "react-router-dom";

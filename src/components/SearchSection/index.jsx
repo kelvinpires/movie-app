@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { API_KEY } from "../../api";
+import { API_KEY, api } from "../../services/api";
 import { GlobalContext } from "../../context/GlobalState";
-import { api } from "../../services/api";
 
 import "./styles.css";
 

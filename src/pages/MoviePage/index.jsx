@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { API_KEY } from "../../api";
+import { API_KEY, api } from "../../services/api";
 import { Link, useParams } from "react-router-dom";
 import { MdWatchLater } from "react-icons/md";
 import { MdAdd } from "react-icons/md";
@@ -10,7 +10,6 @@ import { Loading } from "../../components/Loading";
 import { SlideCast } from "./SlideCast";
 import { FaPlay } from "react-icons/fa";
 import { MovieTrailer } from "./MovieTrailer";
-import axios from "axios";
 import { SlideSimilar } from "./SlideSimilar";
 
 import { MoviePageBg } from "./styles";
@@ -40,9 +39,9 @@ function MoviePage() {
   const { type, id } = useParams();
 
   const getMovieDetails = () => {
-    axios
+    api
       .get(
-        `https://api.themoviedb.org/3/${type}/${id}?api_key=${API_KEY}&append_to_response=videos,images,release_dates,content_ratings,recommendations,credits,watch/providers&include_image_language=${userLang},null&include_video_language=${userLang},en&language=${userLang}`
+        `${type}/${id}?api_key=${API_KEY}&append_to_response=videos,images,release_dates,content_ratings,recommendations,credits,watch/providers&include_image_language=${userLang},null&include_video_language=${userLang},en&language=${userLang}`
       )
       .then(({ data }) => {
         setMovieDetails(data);
