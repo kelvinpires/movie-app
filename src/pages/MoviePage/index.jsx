@@ -369,7 +369,7 @@ function MoviePage() {
               }}
             ></div>
             <SlideCast cast={movieDetails.credits.cast} />
-            <Gallery images={movieDetails.images.backdrops} />
+            <Gallery images={movieDetails.images.backdrops} id={id} />
             {movieDetails.recommendations.results != false && (
               <SlideSimilar
                 type={type}

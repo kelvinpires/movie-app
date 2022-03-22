@@ -9,9 +9,7 @@ import {
   GalleryThumbsImgContent,
 } from "./styles";
 
-const Thumbnails = ({ arrImgs = [], currentSlide, nextSlide }) => {
-  const thumbRef = useRef();
-
+const Thumbnails = ({ arrImgs = [], currentSlide, nextSlide, thumbRef }) => {
   function nextThumb(i) {
     thumbRef.current.scrollLeft = i * 100;
   }
@@ -36,14 +34,20 @@ const Thumbnails = ({ arrImgs = [], currentSlide, nextSlide }) => {
   );
 };
 
-export const Gallery = ({ images }) => {
+export const Gallery = ({ images, id }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const thumbRef = useRef();
 
   function nextSlide(slideIndex = currentSlide + 1) {
     const newSlideIndex = slideIndex >= images?.length ? 0 : slideIndex;
 
     setCurrentSlide(newSlideIndex);
   }
+
+  useEffect(() => {
+    setCurrentSlide(0);
+    thumbRef.current.scrollLeft = 0;
+  }, [id]);
 
   return (
     <GalleryContainer>
@@ -65,6 +69,7 @@ export const Gallery = ({ images }) => {
         currentSlide={currentSlide}
         nextSlide={nextSlide}
         arrImgs={images}
+        thumbRef={thumbRef}
       />
     </GalleryContainer>
   );
