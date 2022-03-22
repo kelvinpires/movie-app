@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
+import "./styles.css";
 
 function SlideCast({ cast }) {
   let scrollFinal = 0;
@@ -15,7 +16,7 @@ function SlideCast({ cast }) {
     scrollFinal--;
     if (scrollFinal < 0) {
       carousel.current.scrollLeft = carousel.current.offsetWidth * cast.length;
-      scrollFinal = cast.length - 1;
+      scrollFinal = Math.ceil(cast.length / 7) - 1;
     }
   };
 
@@ -23,7 +24,7 @@ function SlideCast({ cast }) {
     carousel.current.scrollLeft += carousel.current.offsetWidth;
     scrollFinal++;
 
-    if (scrollFinal == cast.length) {
+    if (scrollFinal == Math.ceil(cast.length / 7)) {
       carousel.current.scrollLeft = 0;
       scrollFinal = 0;
     }
@@ -46,8 +47,12 @@ function SlideCast({ cast }) {
               ? `https://www.themoviedb.org/t/p/w342/${act.profile_path}`
               : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXT05fi8hhDM3K386lZ1X5ohWlolSJV71FgMPySBO4XC9dcm5jD2AVAdd8gtRbgOQ-FdM&usqp=CAU";
           return (
-            <div className="slide-item" key={act.name}>
-              <img className="slide-img" src={actImg} alt={act.name} />
+            <div className="slide-item slide-cast" key={act.name}>
+              <img
+                className="slide-img slide-img-cast"
+                src={actImg}
+                alt={act.name}
+              />
               <div
                 style={{
                   width: "100%",

@@ -19,13 +19,13 @@ import styled from "styled-components";
 // background
 
 export const MoviePageBg = styled.div`
-  background: url("${({ bg }) => bg}");
+  background-image: url("${({ bg }) => bg}");
   background-size: cover;
   width: 100%;
   height: 100%;
   position: absolute;
-  top: 0;
   left: 0;
+  top: 0;
   opacity: 0.4;
 `;
 

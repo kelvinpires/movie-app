@@ -34,7 +34,7 @@
     margin: 1rem;
   }
   .movies-group .item {
-    min-width: 20rem;
+    width: 20rem;
     min-height: 30rem;
     list-style: none;
     transition: all 0.4s ease-in-out;

@@ -14,10 +14,12 @@ import { SlideSimilar } from "./SlideSimilar";
 
 import { MoviePageBg } from "./styles";
 import "./styles.css";
+import { Gallery } from "../../components/Gallery";
 
 function MoviePage() {
   const [movieDetails, setMovieDetails] = useState([]);
   const [movieCertification, setMovieCertification] = useState([]);
+  const [movieWatch, setMovieWatch] = useState([]);
   const [loading, setLoading] = useState(true);
   const [movieTrailers, setMovieTrailers] = useState([]);
 
@@ -41,12 +43,17 @@ function MoviePage() {
   const getMovieDetails = () => {
     api
       .get(
-        `${type}/${id}?api_key=${API_KEY}&append_to_response=videos,images,release_dates,content_ratings,recommendations,credits,watch/providers&include_image_language=${userLang},null&include_video_language=${userLang},en&language=${userLang}`
+        `${type}/${id}?api_key=${API_KEY}&append_to_response=videos,images,release_dates,content_ratings,recommendations,credits,watch/providers&include_image_language=${userLang},en,null&include_video_language=${userLang},en&language=${userLang}`
       )
       .then(({ data }) => {
         setMovieDetails(data);
+
         setMovieTrailers(data.videos.results);
         data.release_dates && setMovieCertification(data.release_dates.results);
+        data["watch/providers"].results?.[userLang.slice(3)]?.flatrate &&
+          setMovieWatch(
+            data["watch/providers"].results[userLang.slice(3)]?.flatrate
+          );
       })
       .catch((err) => {
         console.warn(err);
@@ -79,9 +86,9 @@ function MoviePage() {
       (country) => country.iso_3166_1 == "US"
     );
     if (tvShowCertification != false) {
-      certification = tvShowCertification?.[0].rating;
-    } else if (tvShowCertification != false && UStvShowCertification) {
-      certification = UStvShowCertification?.[0].rating;
+      certification = tvShowCertification?.[0]?.rating;
+    } else if (tvShowCertification == false && UStvShowCertification) {
+      certification = UStvShowCertification?.[0]?.rating;
     } else {
       certification = null;
     }
@@ -136,10 +143,11 @@ function MoviePage() {
     const movieRestMinutes = (movieTotalHours - movieRealHour) * 60;
     let minutes =
       movieRestMinutes.toFixed() > 0 && movieRestMinutes.toFixed() <= 9
-        ? `0${movieRestMinutes.toFixed()}m`
-        : `${movieRestMinutes.toFixed()}m`;
+        ? `0${movieRestMinutes.toFixed()}min`
+        : `${movieRestMinutes.toFixed()}min`;
     if (movieRestMinutes == 0) minutes = "";
-    let movieRealTime = `${movieRealHour}h ${minutes}`;
+    let movieRealTime =
+      movieRealHour == 0 ? `${minutes}` : `${movieRealHour}h ${minutes}`;
 
     if (movieRealTime.startsWith("NaN")) {
       movieRealTime = "Em breve";
@@ -159,7 +167,9 @@ function MoviePage() {
   );
 
   const isTrailerOfficialEN = movieTrailers.filter(
-    (movie) => movie.type == "Trailer" && movie.iso_3166_1 == "US"
+    (movie) =>
+      (movie.type == "Trailer" || movie.type == "Teaser") &&
+      movie.iso_3166_1 == "US"
   );
 
   if (isTrailerOfficial.length > 1) {
@@ -216,11 +226,38 @@ function MoviePage() {
             <MoviePageBg
               bg={`https://www.themoviedb.org/t/p/w1280${movieDetails.backdrop_path}`}
             ></MoviePageBg>
-            <div className="movie-img-container">
-              <img
-                className="movie-img"
-                src={`https://www.themoviedb.org/t/p/w780${movieDetails.poster_path}`}
-              />
+            <div
+              className="movie-img-container"
+              style={{
+                paddingBottom: `${movieWatch != false ? ".5rem" : ""}`,
+              }}
+            >
+              <div className="movie-img-content">
+                <div className="movie-img-poster">
+                  <img
+                    style={{
+                      borderRadius: `${
+                        movieWatch != false ? ".8rem .8rem 0 0" : ".8rem"
+                      }`,
+                    }}
+                    className="movie-img"
+                    src={`https://www.themoviedb.org/t/p/w780${movieDetails.poster_path}`}
+                  />
+                </div>
+
+                {movieWatch != false && (
+                  <div className="platforms">
+                    {movieWatch.slice(0, 3).map((stream) => (
+                      <img
+                        key={stream.provider_id}
+                        title={stream.provider_name}
+                        style={{ borderRadius: ".3rem" }}
+                        src={`https://www.themoviedb.org/t/p/w45${stream.logo_path}`}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
             <div className="movie-description">
               <h1 className="movie-title">
@@ -322,7 +359,17 @@ function MoviePage() {
               zIndex: 4,
             }}
           >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1rem",
+                justifyContent: "center",
+                margin: "1rem 0",
+              }}
+            ></div>
             <SlideCast cast={movieDetails.credits.cast} />
+            <Gallery images={movieDetails.images.backdrops} />
             {movieDetails.recommendations.results != false && (
               <SlideSimilar
                 type={type}
