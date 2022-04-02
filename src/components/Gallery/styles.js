@@ -35,7 +35,7 @@ export const GalleryThumbs = styled.div`
   width: 70vw;
   margin-top: 1rem;
   display: flex;
-  overflow-x: hidden;
+  overflow: hidden;
   scroll-behavior: smooth;
 `;
 

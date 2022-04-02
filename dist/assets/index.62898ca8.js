@@ -32,7 +32,7 @@ var ue=Object.defineProperty,fe=Object.defineProperties;var ge=Object.getOwnProp
   width: 70vw;
   margin-top: 1rem;
   display: flex;
-  overflow-x: hidden;
+  overflow: hidden;
   scroll-behavior: smooth;
 `,Ue=L.div`
   width: 10rem;
